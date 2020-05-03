@@ -1,0 +1,73 @@
+version: "3.7"
+
+services:
+
+  client:
+    container_name: jungle_hunt_client
+    build: ./app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/var/app
+      - /var/app/node_modules
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: 'true'
+    tty: true
+    stdin_open: true
+
+  api:
+    container_name: jungle_hunt_server
+    build: ./api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api:/var/api
+      - /var/api/node_modules
+    env_file: ./api/.env
+    networks:
+      - server_dev
+
+  db:
+    container_name: jungle_hunt_db
+    build: ./db
+    restart: 'always'
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_DATA_DIR: /data/db
+      MONGO_LOG_DIR: /dev/null
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: jungleHunt
+    volumes:
+      - jungleHunt-data:/data/db
+    networks:
+      - server_dev
+  
+  # admin:
+  #   container_name: jungle_hunt_admin
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - "8081:8081"
+  #   environment: 
+  #     ME_CONFIG_MONGODB_SERVER: db
+  #     ME_CONFIG_MONGODB_PORT: '27017'
+  #     ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+  #     ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+  #     ME_CONFIG_BASICAUTH_USERNAME: dev
+  #     ME_CONFIG_BASICAUTH_PASSWORD: dev
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+  #     ME_CONFIG_OPTIONS_EDITORTHEME: ambiance
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - server_dev
+
+volumes: 
+  jungleHunt-data:
+
+networks: 
+  server_dev:
