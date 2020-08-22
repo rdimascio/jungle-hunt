@@ -1,0 +1,29 @@
+{
+	"builders": [
+		{
+			"type": "digitalocean",
+			"api_token": "{{user `do_token`}}",
+			"image": "{{user `base_system_image`}}",
+			"region": "{{user `region`}}",
+			"size": "{{user `size`}}",
+			"ssh_username": "root"
+		}
+	],
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "./config",
+			"destination": "/tmp/config"
+        },
+		{
+            "type": "shell",
+            "environment_vars": [
+                "USER={{user `username`}}",
+                "PASSWORD={{user `password`}}",
+				"SSH_KEY={{user `ssh_public_key`}}",
+				"NODE_ENV={{user `environment`}}"
+            ],
+			"script": "./config/init.sh"
+		}
+	]
+}

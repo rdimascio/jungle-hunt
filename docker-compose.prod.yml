@@ -12,6 +12,23 @@ services:
     environment:
       NODE_ENV: 'production'
 
+  db:
+    container_name: jungle_hunt_db
+    build: ./db
+    restart: 'always'
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_DATA_DIR: /data/db
+      MONGO_LOG_DIR: /dev/null
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: jungleHunt
+    volumes:
+      - jungleHunt-data_prod:/data/db
+    networks:
+      - server_prod
+  
   nginx:
     build: ./nginx
     ports:
@@ -36,5 +53,7 @@ services:
       - ./data/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
+volumes: 
+  jungleHunt-data_prod:
 networks: 
   server_prod:
