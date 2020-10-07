@@ -1,6 +1,5 @@
 .env
-auth.txt
-/node_modules
+node_modules
 /app
 /api
 /scraper

@@ -1,1 +1,3 @@
-definitions.tf
+definitions.*.tfvars
+terraform.tfstate
+terraform.tfstate.*
