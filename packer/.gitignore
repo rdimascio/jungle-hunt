@@ -1,3 +1,3 @@
 /config/env
 /config/ssh
-variables.json
+variables.*.json
