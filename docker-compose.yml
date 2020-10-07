@@ -45,26 +45,26 @@ services:
     networks:
       - server_dev
   
-  # admin:
-  #   container_name: jungle_hunt_admin
-  #   image: mongo-express
-  #   restart: always
-  #   ports:
-  #     - "8081:8081"
-  #   environment: 
-  #     ME_CONFIG_MONGODB_SERVER: db
-  #     ME_CONFIG_MONGODB_PORT: '27017'
-  #     ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
-  #     ME_CONFIG_MONGODB_AUTH_DATABASE: admin
-  #     ME_CONFIG_BASICAUTH_USERNAME: dev
-  #     ME_CONFIG_BASICAUTH_PASSWORD: dev
-  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
-  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
-  #     ME_CONFIG_OPTIONS_EDITORTHEME: ambiance
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - server_dev
+  admin:
+    container_name: jungle_hunt_admin
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment: 
+      ME_CONFIG_MONGODB_SERVER: db
+      ME_CONFIG_MONGODB_PORT: '27017'
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+      ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+      ME_CONFIG_BASICAUTH_USERNAME: dev
+      ME_CONFIG_BASICAUTH_PASSWORD: dev
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_OPTIONS_EDITORTHEME: ambiance
+    depends_on:
+      - db
+    networks:
+      - server_dev
 
 volumes: 
   jungleHunt-data:
