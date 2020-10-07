@@ -1,3 +1,4 @@
+.terraform
 definitions.*.tfvars
 terraform.tfstate
 terraform.tfstate.*
